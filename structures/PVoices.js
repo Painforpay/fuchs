@@ -55,7 +55,7 @@ module.exports = class PVoices {
             })
 
 
-            newState.member.send(`Dein Sprachkanal wurde erstellt und steht bereit!`).then(m => m.delete({timeout: 6000})).catch(() => null);
+            // newState.member.send(`Dein Sprachkanal wurde erstellt und steht bereit!`).then(m => m.delete({timeout: 6000})).catch(() => null);
 
         }
     }
