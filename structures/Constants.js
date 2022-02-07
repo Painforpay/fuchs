@@ -1,7 +1,7 @@
 module.exports = {
 
     clientVersion: '1.0', // Relativ unnötig aber cool zu zeigen, welche Version der Bot hat ^^
-    guildID: '800110137544146954', // Das ist die ServerID
+    guildID: '904067231049199686', // Das ist die ServerID
 
     channels: {
         generalChat: '800110138027409501', // Das ist der Hauptchat in den jeder reinschauen kann

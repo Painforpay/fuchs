@@ -32,7 +32,7 @@ module.exports = class extends Command {
 
         switch (kat) {
             case "gender": {
-                topictype = "rollen";
+                topictype = "gender";
                 topic_short = `Geschlecht ♂️ ♀️ 🧑`
                 topic = "Geschlecht";
                 embedColor = `#117C15`;
