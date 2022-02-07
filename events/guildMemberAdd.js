@@ -14,17 +14,10 @@ module.exports = class extends Event {
 
             const embed = new MessageEmbed().setTitle("Willkommen auf unseren Server!")
                 .setColor("#2F3136")
-                .setAuthor({name: member.user.tag})
-                .setThumbnail(member.user.avatarURL({ dynamic: true }))
-                .addFields({
-                        value: `────✧❁✧────\nIch hoffe dir gefällt der Aufenthalt auf unserem Server. Bitte lies dir die <#${this.client.constants.channels.rules}> und gebe dir anschließend <#${this.client.constants.channels.roles}>.\nHier wirst du nicht in Vergessenheit geraten!\n────✧❁✧────`,
-                        name: "⤷strawhats⤶",
-                        inline: true
-                    }
-                ).setImage("https://media.discordapp.net/attachments/897206631140569198/939709423360802856/dbb9nym-e61caf35-aaa1-4968-b233-029e35976dbd.gif?width=1025&height=354")
-                this.client.guild.channels.fetch(this.client.constants.channels.generalChat).then(channel => channel.send({embeds: [embed]}))
+                .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
+                .addField("⤷Calopia⤶", `──────────✧❁✧──────────\nIch hoffe dir gefällt der Aufenthalt auf unserem Server.\nBitte lies dir die <#${this.client.constants.channels.rules}> und gebe dir anschließend <#${this.client.constants.channels.roles}>.\nHier wirst du nicht in Vergessenheit geraten!\n──────────✧❁✧──────────`)
+                .setImage("https://media.discordapp.net/attachments/897206631140569198/939709423360802856/dbb9nym-e61caf35-aaa1-4968-b233-029e35976dbd.gif?width=1025&height=354")
+                this.client.guild.channels.fetch(this.client.constants.channels.generalChat).then(channel => channel.send({content: `<@${member.user.id}>` ,embeds: [embed]}))
         }
-
-
     }
 }

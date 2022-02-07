@@ -4,9 +4,9 @@ module.exports = {
     guildID: '904067231049199686', // Das ist die ServerID
 
     channels: {
-        generalChat: '800110138027409501', // Das ist der Hauptchat in den jeder reinschauen kann
-        joinLog: '800110139155546209', // Das ist der Channel, welcher für Mods only ist
-        VCHub: '804744090637959178', // Das ist der Channel, welchem beigetreten werden muss, um einen Privaten VoiceChannel zu erstellen
+        generalChat: '905957259195060304', // Das ist der Hauptchat in den jeder reinschauen kann
+        joinLog: '907313677894570024', // Das ist der Channel, welcher für Mods only ist
+        VCHub: '905972980251787275', // Das ist der Channel, welchem beigetreten werden muss, um einen Privaten VoiceChannel zu erstellen
         rules: '905038590734635048', // Das ist der Channel, in welchen die Regeln stehen
         roles: '919723582957973554' // Das ist der Channel in dem man sich selbst Rollen geben kann
     },
