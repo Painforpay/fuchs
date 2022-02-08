@@ -6,6 +6,8 @@ module.exports = class Trivia {
     constructor(client) {
         this.client = client;
         this.activeGames = new Collection();
+
+        this.scores = new Collection();
     }
 
 
@@ -61,7 +63,7 @@ module.exports = class Trivia {
             gameMessage: gameMessage
         });
 
-        interaction.message.delete();
+        interaction.message.delete().catch(() => null);
 
         // Trivia Counter
         setTimeout(() => {
@@ -86,6 +88,16 @@ module.exports = class Trivia {
                 components: [],
                 embeds: []
             });
+
+            if(this.scores.has(interaction.member.user.id)) {
+
+                this.scores.set(interaction.member.user.id, {score: (this.scores.get(interaction.member.user.id).score + 1), user: interaction.member.user})
+
+            } else {
+
+                this.scores.set(interaction.member.user.id, {score: 1, user: interaction.member.user})
+
+            }
 
             this.activeGames.delete(activeGame.gameHash);
         } else {
