@@ -20,15 +20,16 @@ module.exports = class Trivia {
 
         const gameData = await fetch(requestURL).then(res => res.json().then(body => {return body;}));
 
+        const question = this.decodeBase64(gameData.results[0].question)
 
         const triviaEmbed = new MessageEmbed()
             .setTitle(`Category: ${this.decodeBase64(gameData.results[0].category)}`)
-            .setDescription(this.decodeBase64(gameData.results[0].question))
+            .setDescription(question)
             .setFooter({text: `Difficulty ${this.decodeBase64(gameData.results[0].difficulty)} | Started by ${starter.user.tag}`})
 
         //triviaEmbed.addField('Correct:', this.decodeBase64(gameData.results[0].correct_answer) + " " + gameData.results[0].correct_answer);
 
-        const gameHash = 'TRIVIA-'+starter.user.id + Date.parse(new Date().toString());
+        const gameHash = 'TRIVIA-'+Date.parse(new Date().toString());
 
         let possibleEntries = [];
 
@@ -53,6 +54,7 @@ module.exports = class Trivia {
 
         this.activeGames.set(gameHash, {
             gameHash: gameHash,
+            question: question,
             correct: correctType,
             playersGuessed: [],
             startTime: Date.parse(new Date().toString()),
@@ -60,18 +62,27 @@ module.exports = class Trivia {
         });
 
         interaction.message.delete();
+
+        // Trivia Counter
+        setTimeout(() => {
+            if(this.client.triviaManager.activeGames.has(gameHash)) {
+                    gameMessage.edit({content: `Nobody could guess the correct Answer in 60 Seconds!\nThe Question was: **${question}**\nThe Answer was: **${this.client.triviaManager.decodeBase64(v.correct)}**`, embeds: [], components: []})
+            }
+        }, 61000)
+
+
     }
 
     async checkAnswer(interaction) {
 
         const activeGame = this.activeGames.get(interaction.customId)
 
-        if(interaction.values[0] == activeGame.correct) {
+        if(interaction.values[0] === activeGame.correct) {
             const time = (Date.parse(new Date().toString()) - activeGame.startTime) / 1000;
             const winner = interaction.member;
 
             interaction.update({
-                content: `${winner} has guessed the correct answer in ${time} Seconds! Congratulations!\nThe Answer was: **${this.decodeBase64(activeGame.correct)}**`,
+                content: `${winner} has guessed the correct answer in ${time} Seconds! Congratulations!\nThe Question was: **${activeGame.question}**\nThe Answer was: **${this.decodeBase64(activeGame.correct)}**`,
                 components: [],
                 embeds: []
             });
@@ -79,7 +90,7 @@ module.exports = class Trivia {
             this.activeGames.delete(activeGame.gameHash);
         } else {
 
-            interaction.channel.send(`${interaction.member} guessed wrong!`)
+            interaction.channel.send(`${interaction.member} has guessed wrong!`)
             await interaction.deferUpdate();
         }
 

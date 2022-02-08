@@ -39,18 +39,6 @@ module.exports = class extends Event {
        //*/
        ///////////////////////// Anti Spam /////////////////////////
 
-        // Trivia Counter
-        setInterval(() => {
-            this.client.triviaManager.activeGames.forEach((v, gameHash) => {
-                const elapsedTime = Date.parse(new Date().toString()) - v.startTime;
-                if(elapsedTime > 60000) {
-
-                    v.gameMessage.edit({content: `Nobody could guess the correct Answer in 60 Seconds!\nCorrect Answer: **${this.client.triviaManager.decodeBase64(v.correct)}**`, embeds: [], components: []})
-
-                }
-            })
-        }, 1000)
-
 
         /*
                 await guild.commands.set([]);
