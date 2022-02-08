@@ -18,8 +18,8 @@ module.exports = class Trivia {
 
         // Get GameData //
 
-        const gameData = await fetch(requestURL).then(res => res.json().then(body => {return body;}));
-
+        const gameData = await fetch(requestURL).then(res => res.json().then(body => {return body;})).catch(() => null);
+        if(!gameData) return;
         const question = this.decodeBase64(gameData.results[0].question)
 
         const triviaEmbed = new MessageEmbed()
@@ -36,7 +36,7 @@ module.exports = class Trivia {
 
         const correctType = gameData.results[0].correct_answer;
 
-        possibleEntries.push({label: this.decodeBase64(gameData.results[0].correct_answer), value: gameData.results[0].correct_answer});
+        possibleEntries.push({label: this.decodeBase64(correctType), value: correctType});
 
         gameData.results[0].incorrect_answers.forEach(answer => {
             possibleEntries.push({label: this.decodeBase64(answer), value: answer});
@@ -66,7 +66,7 @@ module.exports = class Trivia {
         // Trivia Counter
         setTimeout(() => {
             if(this.client.triviaManager.activeGames.has(gameHash)) {
-                    gameMessage.edit({content: `Nobody could guess the correct Answer in 60 Seconds!\nThe Question was: **${question}**\nThe Answer was: **${this.client.triviaManager.decodeBase64(v.correct)}**`, embeds: [], components: []})
+                    gameMessage.edit({content: `Nobody could guess the correct Answer in 60 Seconds!\nThe Question was: **${question}**\nThe Answer was: **${this.decodeBase64(correctType)}**`, embeds: [], components: []})
             }
         }, 61000)
 

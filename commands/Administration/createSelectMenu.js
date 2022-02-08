@@ -35,7 +35,7 @@ module.exports = class extends Command {
                 topictype = "gender";
                 topic_short = `Geschlecht ♂️ ♀️ 🧑`
                 topic = "Geschlecht";
-                embedColor = `#117C15`;
+                embedColor = `#B38F05`;
                 options = [{
                     label: 'Männlich',
 
