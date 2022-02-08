@@ -20,7 +20,7 @@ module.exports = class extends Command {
 
         const scores = this.client.triviaManager.scores.map(x => x);
 
-        let description = ``;
+        let description = `Trivia Spieler:\n`;
 
         for await (const index of scores) {
             description += `${index.user}: ${index.score}\n`
