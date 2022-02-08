@@ -14,7 +14,7 @@ module.exports = class Trivia {
         const starter = interaction.member;
         const category = interaction.values[0];
 
-        const requestURL = `https://opentdb.com/api.php?amount=1&category=${category}&type=multiple&encode=base64`
+        const requestURL = `https://opentdb.com/api.php?amount=1${category === 'ANY' ? "" : '&category='+category}&type=multiple&encode=base64`
 
         // Get GameData //
 
@@ -26,7 +26,7 @@ module.exports = class Trivia {
             .setDescription(this.decodeBase64(gameData.results[0].question))
             .setFooter({text: `Difficulty ${this.decodeBase64(gameData.results[0].difficulty)} | Started by ${starter.user.tag}`})
 
-        triviaEmbed.addField('Correct:', this.decodeBase64(gameData.results[0].correct_answer) + " " + gameData.results[0].correct_answer);
+        //triviaEmbed.addField('Correct:', this.decodeBase64(gameData.results[0].correct_answer) + " " + gameData.results[0].correct_answer);
 
         const gameHash = 'TRIVIA-'+starter.user.id + Date.parse(new Date().toString());
 
@@ -43,7 +43,7 @@ module.exports = class Trivia {
 
         possibleEntries = await this.client.utils.shuffleArray(possibleEntries);
 
-        await gameChannel.send({embeds: [triviaEmbed], components: [new MessageActionRow()
+        const gameMessage = await gameChannel.send({embeds: [triviaEmbed], components: [new MessageActionRow()
                 .addComponents(
                     new MessageSelectMenu()
                         .setCustomId(gameHash)
@@ -55,8 +55,8 @@ module.exports = class Trivia {
             gameHash: gameHash,
             correct: correctType,
             playersGuessed: [],
-            startTime: Date.parse(new Date().toString())
-
+            startTime: Date.parse(new Date().toString()),
+            gameMessage: gameMessage
         });
 
         interaction.message.delete();
@@ -80,6 +80,7 @@ module.exports = class Trivia {
         } else {
 
             interaction.channel.send(`${interaction.member} guessed wrong!`)
+            await interaction.deferUpdate();
         }
 
     }
