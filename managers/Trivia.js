@@ -71,7 +71,7 @@ module.exports = class Trivia {
             const winner = interaction.member;
 
             interaction.update({
-                content: `${winner} has guessed the correct answer in ${time} Seconds! Congratulations!\nThe Answer was: ${this.decodeBase64(activeGame.correct)}`,
+                content: `${winner} has guessed the correct answer in ${time} Seconds! Congratulations!\nThe Answer was: **${this.decodeBase64(activeGame.correct)}**`,
                 components: [],
                 embeds: []
             });
