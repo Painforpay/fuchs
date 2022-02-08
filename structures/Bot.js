@@ -1,6 +1,7 @@
 const { Client, Collection, Permissions } = require('discord.js');
 const Util = require('./Utils');
-const PVoices = require('./PVoices')
+const PVoices = require('./PVoices');
+const Trivia = require('../managers/Trivia');
 
 
 module.exports = class DiscordBot extends Client {
@@ -17,6 +18,8 @@ module.exports = class DiscordBot extends Client {
         this.pVoices = new PVoices(this);
 
         this.guild;
+
+        this.triviaManager = new Trivia(this);
 
         this.constants = require('./Constants');
 

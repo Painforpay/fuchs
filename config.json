@@ -1,6 +1,6 @@
 {
   "defaultPrefix": "!",
   "owners": ["265163576904253441"],
-  "defaultPerms": ["ADMINISTRATOR"],
+  "defaultPerms": ["CONNECT"],
   "dev": false
 }

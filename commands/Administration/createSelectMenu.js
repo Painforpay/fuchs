@@ -243,7 +243,7 @@ module.exports = class extends Command {
                 new MessageSelectMenu()
                     .setMinValues(0)
                     .setMaxValues(maxValues)
-                    .setCustomId(topictype)
+                    .setCustomId('roleSelect')
                     .setPlaceholder(`Wähle dein${plural ? 'e' : ''} ${topic}`)
                     .addOptions(options)
             );
