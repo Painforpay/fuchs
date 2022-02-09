@@ -52,25 +52,29 @@ module.exports = class Trivia {
                         .setCustomId(gameHash)
                         .setPlaceholder(`Choose the correct Answer`)
                         .addOptions(possibleEntries)
-                )]})
+                )]}).catch(() => null )
 
-        this.activeGames.set(gameHash, {
-            gameHash: gameHash,
-            question: question,
-            correct: correctType,
-            playersGuessed: [],
-            startTime: Date.parse(new Date().toString()),
-            gameMessage: gameMessage
-        });
+        if(gameMessage) {
+            this.activeGames.set(gameHash, {
+                gameHash: gameHash,
+                question: question,
+                correct: correctType,
+                playersGuessed: [],
+                startTime: Date.parse(new Date().toString()),
+                gameMessage: gameMessage
+            });
 
-        interaction.message.delete().catch(() => null);
+            interaction.message.delete().catch(() => null);
 
-        // Trivia Counter
-        setTimeout(() => {
-            if(this.client.triviaManager.activeGames.has(gameHash)) {
-                    gameMessage.edit({content: `Nobody could guess the correct Answer in 60 Seconds!\nThe Question was: **${question}**\nThe Answer was: **${this.decodeBase64(correctType)}**`, embeds: [], components: []})
-            }
-        }, 61000)
+            // Trivia Counter
+            setTimeout(() => {
+                if(this.client.triviaManager.activeGames.has(gameHash)) {
+
+                    const guessers = this.client.triviaManager.activeGames.get(gameHash).playersGuessed;
+                    gameMessage.edit({content: `Nobody could guess the correct Answer in 60 Seconds!\nThe Question was: **${question}**\nThe Answer was: **${this.decodeBase64(correctType)}**${guessers.length > 0 ? '<@' + guessers.join('> <@') + '>' : ''}`, embeds: [], components: []})
+                }
+            }, 61000)
+        }
 
 
     }
@@ -101,8 +105,6 @@ module.exports = class Trivia {
 
             this.activeGames.delete(activeGame.gameHash);
         } else {
-
-            interaction.channel.send(`${interaction.member} has guessed wrong!`)
             await interaction.deferUpdate();
         }
 
