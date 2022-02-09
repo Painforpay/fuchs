@@ -20,7 +20,7 @@ module.exports = class extends Command {
 
         const scores = this.client.triviaManager.scores.map(x => x);
 
-        let description = `Die Punkte sind wie folgt verteilt:`;
+        let description = `Die Punkte sind wie folgt verteilt:\n`;
         let total = 0;
         for await (const index of scores) {
             description += `${index.user}: ${index.score}\n`
@@ -30,7 +30,7 @@ module.exports = class extends Command {
         const embed = new MessageEmbed()
             .setTitle(`Trivia`)
             .setDescription(description)
-            .setFooter(`${total} Punkte insgesamt verteilt auf ${scores.length} Spieler`)
+            .setFooter({text: `${total} Punkte insgesamt verteilt auf ${scores.length} Spieler`})
             .setTimestamp()
 
         context.channel.send({embeds: [embed]})

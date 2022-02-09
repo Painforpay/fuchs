@@ -71,7 +71,7 @@ module.exports = class Trivia {
                 if(this.client.triviaManager.activeGames.has(gameHash)) {
 
                     const guessers = this.client.triviaManager.activeGames.get(gameHash).playersGuessed;
-                    gameMessage.edit({content: `Nobody could guess the correct Answer in 60 Seconds!\nThe Question was: **${question}**\nThe Answer was: **${this.decodeBase64(correctType)}**${guessers.length > 0 ? '<@' + guessers.join('> <@') + '>' : ''}`, embeds: [], components: []})
+                    gameMessage.edit({content: `Nobody could guess the correct Answer in 60 Seconds!\nThe Question was: **${question}**\nThe Answer was: **${this.decodeBase64(correctType)}**${guessers.length > 0 ? '\n<@' + guessers.join('> <@') + '>' : ''}`, embeds: [], components: []})
                 }
             }, 61000)
         }
